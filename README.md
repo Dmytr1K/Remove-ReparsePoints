@@ -2,7 +2,7 @@
 
 PowerShell script for finding and removing reparse points in a directory tree on Windows.
 
-This project is an early version. The current `v0.1` version contains the original script as-is, with minimal project structure added around it.
+This project is an early version. The current `v0.2` version requires an explicit target path parameter.
 
 ## Purpose
 
@@ -36,14 +36,19 @@ Older Windows versions and PowerShell 7 compatibility have not been tested yet.
 ## Usage
 
 ```powershell
-.\Remove-ReparsePoints.ps1
+.\Remove-ReparsePoints.ps1 -Path "D:\Path\To\TestDirectory"
 ```
 
 More detailed usage examples will be added in later versions.
 
 ## Status
 
-Initial `v0.1` version.
+Current `v0.2` version.
+
+Changes in v0.2:
+
+* requires an explicit -Path parameter;
+* removes the default current directory target.
 
 Planned later improvements:
 
@@ -54,5 +59,5 @@ Planned later improvements:
 
 ## Project info
 
-* Project version: 0.1
+* Project version: 0.2
 * Created: 2026-06-17

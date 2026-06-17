@@ -1,6 +1,8 @@
 Function Remove-ReparsePoints {
-  Param (
-    $Path = '.\'
+  param(
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [string]$Path
   )
 
   Get-ChildItem -Path $Path -Force -ErrorAction Stop | ForEach-Object {
