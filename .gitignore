@@ -1,0 +1,20 @@
+# PowerShell / test output
+TestResults/
+coverage/
+*.ps1xml
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor-local files
+.vscode/
+.idea/
+
+# My personal files
+\!n/
