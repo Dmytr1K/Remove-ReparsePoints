@@ -1,3 +1,9 @@
+param(
+  [Parameter(Mandatory = $true)]
+  [ValidateNotNullOrEmpty()]
+  [string]$Path
+)
+
 Function Remove-ReparsePoints {
   param(
     [Parameter(Mandatory = $true)]
@@ -37,7 +43,7 @@ Function Remove-ReparsePoints {
 }
 
 
-Remove-ReparsePoints
+Remove-ReparsePoints -Path $Path
 
 Write-Host 'All reparse points deleted!!!'
 $host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
