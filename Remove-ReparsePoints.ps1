@@ -1,28 +1,37 @@
 param(
   [Parameter(Mandatory = $true)]
   [ValidateNotNullOrEmpty()]
-  [string]$Path
+  [string]$Path,
+
+  [switch]$Preview
 )
 
 Function Remove-ReparsePoints {
   param(
     [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    [string]$Path
+    [string]$Path,
+
+    [switch]$Preview
   )
 
   Get-ChildItem -Path $Path -Force -ErrorAction Stop | ForEach-Object {
     $CurrentObject = $_
     If ($CurrentObject.Attributes -match 'ReparsePoint') {
       Try {
-        If ($CurrentObject.Attributes -match 'ReadOnly') {
-          $CurrentObject.Attributes -= 'ReadOnly'
+        If ($Preview) {
+          Write-Host "Would remove: $($CurrentObject.FullName)"
         }
-        If ($CurrentObject.Attributes -match 'System') {
-          $CurrentObject.Attributes -= 'System'
+        Else {
+          If ($CurrentObject.Attributes -match 'ReadOnly') {
+            $CurrentObject.Attributes -= 'ReadOnly'
+          }
+          If ($CurrentObject.Attributes -match 'System') {
+            $CurrentObject.Attributes -= 'System'
+          }
+          Write-Host $CurrentObject.FullName
+          $CurrentObject.Delete()
         }
-        Write-Host $CurrentObject.FullName
-        $CurrentObject.Delete()
       }
       Catch {
         # [System.IO.IOException]
@@ -32,7 +41,7 @@ Function Remove-ReparsePoints {
     }
     ElseIf ($CurrentObject.PSIsContainer) {
       Try {
-        Remove-ReparsePoints -Path $CurrentObject.FullName
+        Remove-ReparsePoints -Path $CurrentObject.FullName -Preview:$Preview
       }
       Catch {
         Write-Host $CurrentObject.FullName
@@ -43,7 +52,13 @@ Function Remove-ReparsePoints {
 }
 
 
-Remove-ReparsePoints -Path $Path
+Remove-ReparsePoints -Path $Path -Preview:$Preview
 
-Write-Host 'All reparse points deleted!!!'
+if ($Preview) {
+  Write-Host 'Preview completed.'
+}
+else {
+  Write-Host 'Remove operation completed.'
+}
+
 $host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
