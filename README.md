@@ -2,7 +2,7 @@
 
 PowerShell script for finding and removing reparse points in a directory tree on Windows.
 
-This project is an early version. The current `v0.3` version supports preview mode before removing reparse points.
+This project is an early version. The current `v0.4` version uses preview mode by default. Removing reparse points requires an explicit `-Remove` switch.
 
 ## Purpose
 
@@ -24,7 +24,7 @@ Use it only on test directories, copied profiles, mounted backup images, or othe
 
 Review the script before running it.
 
-Run with `-Preview` first to inspect what would be removed.
+Run without `-Remove` first to inspect what would be removed.
 
 ## Requirements
 
@@ -37,30 +37,34 @@ Older Windows versions and PowerShell 7 compatibility have not been tested yet.
 
 ## Usage
 
-Preview what would be removed:
+Inspect what would be removed:
 
 ```powershell
-.\Remove-ReparsePoints.ps1 -Path "D:\Path\To\TestDirectory" -Preview
+.\Remove-ReparsePoints.ps1 -Path "D:\Path\To\TestDirectory"
 ```
 
 Remove reparse points:
 
 ```powershell
-.\Remove-ReparsePoints.ps1 -Path "D:\Path\To\TestDirectory"
+.\Remove-ReparsePoints.ps1 -Path "D:\Path\To\TestDirectory" -Remove
 ```
 
 More detailed usage examples will be added in later versions.
 
 ## Status
 
-Current `v0.3` version.
+Changes in current `v0.4` version:
 
-Changes in v0.3:
+* uses preview-only mode by default;
+* requires an explicit `-Remove` switch for actual deletion;
+* replaces the previous `-Preview` switch with safer default behavior.
+
+`v0.3` changes:
 
 * adds `-Preview` mode;
 * allows listing reparse points without changing attributes or removing filesystem entries.
 
-Previous `v0.2` changes:
+`v0.2` changes:
 
 * requires an explicit `-Path` parameter;
 * removes the default current directory target.
@@ -68,10 +72,9 @@ Previous `v0.2` changes:
 Planned later improvements:
 
 * split finding and removing logic;
-* add safer confirmation behavior;
 * improve output and documentation.
 
 ## Project info
 
-* Project version: 0.3
+* Project version: 0.4
 * Created: 2026-06-17

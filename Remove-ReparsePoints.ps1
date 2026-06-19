@@ -3,7 +3,7 @@ param(
   [ValidateNotNullOrEmpty()]
   [string]$Path,
 
-  [switch]$Preview
+  [switch]$Remove
 )
 
 Function Remove-ReparsePoints {
@@ -12,17 +12,14 @@ Function Remove-ReparsePoints {
     [ValidateNotNullOrEmpty()]
     [string]$Path,
 
-    [switch]$Preview
+    [switch]$Remove
   )
 
   Get-ChildItem -Path $Path -Force -ErrorAction Stop | ForEach-Object {
     $CurrentObject = $_
     If ($CurrentObject.Attributes -match 'ReparsePoint') {
       Try {
-        If ($Preview) {
-          Write-Host "Would remove: $($CurrentObject.FullName)"
-        }
-        Else {
+        If ($Remove) {
           If ($CurrentObject.Attributes -match 'ReadOnly') {
             $CurrentObject.Attributes -= 'ReadOnly'
           }
@@ -31,6 +28,9 @@ Function Remove-ReparsePoints {
           }
           Write-Host $CurrentObject.FullName
           $CurrentObject.Delete()
+        }
+        Else {
+          Write-Host "Would remove: $($CurrentObject.FullName)"
         }
       }
       Catch {
@@ -41,7 +41,7 @@ Function Remove-ReparsePoints {
     }
     ElseIf ($CurrentObject.PSIsContainer) {
       Try {
-        Remove-ReparsePoints -Path $CurrentObject.FullName -Preview:$Preview
+        Remove-ReparsePoints -Path $CurrentObject.FullName -Remove:$Remove
       }
       Catch {
         Write-Host $CurrentObject.FullName
@@ -52,13 +52,13 @@ Function Remove-ReparsePoints {
 }
 
 
-Remove-ReparsePoints -Path $Path -Preview:$Preview
+Remove-ReparsePoints -Path $Path -Remove:$Remove
 
-if ($Preview) {
-  Write-Host 'Preview completed.'
-}
-else {
+if ($Remove) {
   Write-Host 'Remove operation completed.'
 }
+else {
+  Write-Host 'Preview completed.'
+}
 
-$host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+$host.UI.RawUI.ReadKey('NoEcho, IncludeKeyDown')
