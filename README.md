@@ -2,7 +2,7 @@
 
 PowerShell script for finding and removing reparse points in a directory tree on Windows.
 
-This project is an early version. The current `v0.5` version no longer waits for a key press after the script finishes.
+This project is an early version. The current `v0.6` version improves removal result reporting and error messages.
 
 ## Purpose
 
@@ -53,7 +53,13 @@ More detailed usage examples will be added in later versions.
 
 ## Status
 
-Changes in current `v0.5` version:
+Changes in current `v0.6` version:
+
+* reports removed items only after a successful delete operation;
+* reports failed removals with a clearer message and the underlying exception text;
+* removes stale internal error-type comments from the removal logic.
+
+`v0.5` changes:
 
 * removes the interactive key press pause at the end of the script.
 
@@ -76,9 +82,9 @@ Changes in current `v0.5` version:
 Planned later improvements:
 
 * split finding and removing logic;
-* improve output and documentation.
+* further improve output and error handling.
 
 ## Project info
 
-* Project version: 0.5
+* Project version: 0.6
 * Created: 2026-06-17

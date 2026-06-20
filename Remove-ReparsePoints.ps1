@@ -26,17 +26,16 @@ Function Remove-ReparsePoints {
           If ($CurrentObject.Attributes -match 'System') {
             $CurrentObject.Attributes -= 'System'
           }
-          Write-Host $CurrentObject.FullName
           $CurrentObject.Delete()
+          Write-Host "Removed: $($CurrentObject.FullName)"
         }
         Else {
           Write-Host "Would remove: $($CurrentObject.FullName)"
         }
       }
       Catch {
-        # [System.IO.IOException]
-        Write-Host $CurrentObject.FullName
-        Write-Host 'ReparsePoint Error!'
+        Write-Host "Failed to remove: $($CurrentObject.FullName)"
+        Write-Host $_.Exception.Message
       }
     }
     ElseIf ($CurrentObject.PSIsContainer) {
@@ -55,7 +54,7 @@ Function Remove-ReparsePoints {
 Remove-ReparsePoints -Path $Path -Remove:$Remove
 
 if ($Remove) {
-  Write-Host 'Remove operation completed.'
+  Write-Host 'Remove operation finished.'
 }
 else {
   Write-Host 'Preview completed.'
