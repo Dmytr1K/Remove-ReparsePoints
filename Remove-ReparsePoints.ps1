@@ -60,5 +60,3 @@ if ($Remove) {
 else {
   Write-Host 'Preview completed.'
 }
-
-$host.UI.RawUI.ReadKey('NoEcho, IncludeKeyDown')

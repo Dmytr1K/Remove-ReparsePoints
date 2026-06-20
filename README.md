@@ -2,7 +2,7 @@
 
 PowerShell script for finding and removing reparse points in a directory tree on Windows.
 
-This project is an early version. The current `v0.4` version uses preview mode by default. Removing reparse points requires an explicit `-Remove` switch.
+This project is an early version. The current `v0.5` version no longer waits for a key press after the script finishes.
 
 ## Purpose
 
@@ -53,7 +53,11 @@ More detailed usage examples will be added in later versions.
 
 ## Status
 
-Changes in current `v0.4` version:
+Changes in current `v0.5` version:
+
+* removes the interactive key press pause at the end of the script.
+
+`v0.4` changes:
 
 * uses preview-only mode by default;
 * requires an explicit `-Remove` switch for actual deletion;
@@ -76,5 +80,5 @@ Planned later improvements:
 
 ## Project info
 
-* Project version: 0.4
+* Project version: 0.5
 * Created: 2026-06-17
