@@ -27,22 +27,6 @@ $ErrorActionPreference = 'Stop'
 
 $RootPath = [System.IO.Path]::GetFullPath($Path)
 
-# TODO: Add safety checks for dangerous root paths.
-# Examples: drive root, Windows directory, active user profile, or repository root.
-
-if (Test-Path -LiteralPath $RootPath) {
-  throw "Fixture root already exists: $RootPath. Choose a new path or remove the existing directory manually."
-}
-
-New-Item -ItemType Directory -Path $RootPath | Out-Null
-
-# TODO: Add optional recreate behavior for an existing fixture root.
-# Current behavior: stop if the fixture root already exists.
-# Later, decide whether to support:
-# - allowing an empty existing directory
-# - removing and recreating the fixture root
-# - requiring an explicit -Force switch
-
 # Declarative description of the file system structure to create.
 $FileSystemLayout = [ordered]@{
   Entries = @(
@@ -96,6 +80,22 @@ foreach ($Entry in $FileSystemLayout.Entries) {
     throw "Unsupported file system entry type: $($Entry.Type)"
   }
 }
+
+# TODO: Add safety checks for dangerous root paths.
+# Examples: drive root, Windows directory, active user profile, or repository root.
+
+if (Test-Path -LiteralPath $RootPath) {
+  throw "Fixture root already exists: $RootPath. Choose a new path or remove the existing directory manually."
+}
+
+New-Item -ItemType Directory -Path $RootPath | Out-Null
+
+# TODO: Add optional recreate behavior for an existing fixture root.
+# Current behavior: stop if the fixture root already exists.
+# Later, decide whether to support:
+# - allowing an empty existing directory
+# - removing and recreating the fixture root
+# - requiring an explicit -Force switch
 
 foreach ($Entry in $FileSystemLayout.Entries) {
   $EntryPath = Join-Path -Path $RootPath -ChildPath $Entry.RelativePath
