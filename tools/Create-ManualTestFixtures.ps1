@@ -16,7 +16,6 @@
 #   active user profile, or project repository root.
 # - The fixture root should be explicit and easy to delete.
 
-
 [CmdletBinding()]
 param(
   [Parameter(Mandatory = $true)]
@@ -27,6 +26,20 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $RootPath = [System.IO.Path]::GetFullPath($Path)
+
+# TODO: Add safety checks for dangerous root paths.
+# Examples: drive root, Windows directory, active user profile, or repository root.
+
+if (Test-Path -LiteralPath $RootPath) {
+  throw "Fixture root already exists: $RootPath. Choose a new path or remove the existing directory manually."
+}
+
+# TODO: Add optional recreate behavior for an existing fixture root.
+# Current behavior: stop if the fixture root already exists.
+# Later, decide whether to support:
+# - allowing an empty existing directory
+# - removing and recreating the fixture root
+# - requiring an explicit -Force switch
 
 # Declarative description of the file system structure to create.
 $FileSystemLayout = [ordered]@{
@@ -66,15 +79,6 @@ $FileSystemLayout = [ordered]@{
     }
   )
 }
-
-# TODO: Add safety checks for dangerous root paths.
-# Examples: drive root, Windows directory, active user profile, or repository root.
-
-# TODO: Check whether fixture root already exists.
-# Decide whether to:
-# - stop with a warning
-# - remove and recreate
-# - require explicit -Force later
 
 # TODO: Add validation for unsupported item types.
 
