@@ -11,20 +11,43 @@
 # - It should never target important real data.
 # - The fixture root should be explicit and easy to delete.
 
-# TODO: Define FileSystemLayout data structure.
-# The layout should be a declarative description of file system entries.
-# Each FileSystemEntry should describe one item to create:
-# - Directory
-# - File
-# - Junction
-# - DirectorySymlink
-# - FileSymlink
-# - Hardlink
-#
-# Notes:
-# - The current use case is a manual test fixture.
-# - The structure should not be limited to fixture-only naming.
-# - The root directory can also be described as a FileSystemEntry.
+$FileSystemLayout = [ordered]@{
+  Entries = @(
+    [ordered]@{
+      Type         = 'Directory'
+      RelativePath = '.'
+    }
+    [ordered]@{
+      Type         = 'Directory'
+      RelativePath = 'RegularDirectory'
+    }
+    [ordered]@{
+      Type         = 'File'
+      RelativePath = 'RegularDirectory\RegularFile.txt'
+      Content      = 'Regular file used by manual Remove-ReparsePoints tests.'
+    }
+    [ordered]@{
+      Type               = 'Junction'
+      RelativePath       = 'JunctionToRegularDirectory'
+      TargetRelativePath = 'RegularDirectory'
+    }
+    [ordered]@{
+      Type               = 'DirectorySymlink'
+      RelativePath       = 'DirectorySymlinkToRegularDirectory'
+      TargetRelativePath = 'RegularDirectory'
+    }
+    [ordered]@{
+      Type               = 'FileSymlink'
+      RelativePath       = 'FileSymlinkToRegularFile.txt'
+      TargetRelativePath = 'RegularDirectory\RegularFile.txt'
+    }
+    [ordered]@{
+      Type               = 'Hardlink'
+      RelativePath       = 'HardlinkToRegularFile.txt'
+      TargetRelativePath = 'RegularDirectory\RegularFile.txt'
+    }
+  )
+}
 
 # TODO: Add fixture root path.
 # The root path should be explicit.
