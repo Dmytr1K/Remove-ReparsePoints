@@ -75,9 +75,28 @@ $AllowedEntryTypes = @(
   'Hardlink'
 )
 
+$LinkEntryTypes = @(
+  'Junction'
+  'DirectorySymlink'
+  'FileSymlink'
+  'Hardlink'
+)
+
 foreach ($Entry in $FileSystemLayout.Entries) {
+  if ([string]::IsNullOrWhiteSpace($Entry.Type)) {
+    throw 'File system entry is missing required field: Type'
+  }
+
+  if ([string]::IsNullOrWhiteSpace($Entry.RelativePath)) {
+    throw "File system entry '$($Entry.Type)' is missing required field: RelativePath"
+  }
+
   if ($Entry.Type -notin $AllowedEntryTypes) {
     throw "Unsupported file system entry type: $($Entry.Type)"
+  }
+
+  if (($Entry.Type -in $LinkEntryTypes) -and [string]::IsNullOrWhiteSpace($Entry.TargetRelativePath)) {
+    throw "File system entry '$($Entry.Type)' is missing required field: TargetRelativePath"
   }
 }
 
@@ -110,8 +129,6 @@ foreach ($Entry in $FileSystemLayout.Entries) {
     }
   }
 }
-
-# TODO: Add validation for missing required fields.
 
 # TODO: Add support for attributes.
 
