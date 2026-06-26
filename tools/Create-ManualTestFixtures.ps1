@@ -37,11 +37,13 @@ $FileSystemLayout = [ordered]@{
     [ordered]@{
       Type         = 'Directory'
       RelativePath = 'RegularDirectory'
+      Attributes   = @('ReadOnly')
     }
     [ordered]@{
       Type         = 'File'
       RelativePath = 'RegularDirectory\RegularFile.txt'
       Content      = 'Regular file used by manual Remove-ReparsePoints tests.'
+      Attributes   = @('ReadOnly')
     }
     [ordered]@{
       Type               = 'Junction'
@@ -128,9 +130,16 @@ foreach ($Entry in $FileSystemLayout.Entries) {
       Set-Content -Path $EntryPath -Value $Entry.Content
     }
   }
-}
 
-# TODO: Add support for attributes.
+  if ($Entry.Attributes) {
+    $Item = Get-Item -LiteralPath $EntryPath -Force
+
+    foreach ($Attribute in $Entry.Attributes) {
+      $FileAttribute = [System.IO.FileAttributes] $Attribute
+      $Item.Attributes = $Item.Attributes -bor $FileAttribute
+    }
+  }
+}
 
 # TODO: Add processor for junctions.
 
