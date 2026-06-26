@@ -34,6 +34,8 @@ if (Test-Path -LiteralPath $RootPath) {
   throw "Fixture root already exists: $RootPath. Choose a new path or remove the existing directory manually."
 }
 
+New-Item -ItemType Directory -Path $RootPath | Out-Null
+
 # TODO: Add optional recreate behavior for an existing fixture root.
 # Current behavior: stop if the fixture root already exists.
 # Later, decide whether to support:
@@ -83,8 +85,6 @@ $FileSystemLayout = [ordered]@{
 # TODO: Add validation for unsupported item types.
 
 # TODO: Add validation for missing required fields.
-
-# TODO: Create fixture root directory if it does not exist.
 
 # TODO: Add basic processor for regular directories.
 
