@@ -82,11 +82,19 @@ $FileSystemLayout = [ordered]@{
   )
 }
 
+foreach ($Entry in $FileSystemLayout.Entries) {
+  if ($Entry.Type -ne 'Directory') {
+    continue
+  }
+
+  $EntryPath = Join-Path -Path $RootPath -ChildPath $Entry.RelativePath
+
+  New-Item -ItemType Directory -Path $EntryPath -Force | Out-Null
+}
+
 # TODO: Add validation for unsupported item types.
 
 # TODO: Add validation for missing required fields.
-
-# TODO: Add basic processor for regular directories.
 
 # TODO: Add basic processor for regular files.
 
