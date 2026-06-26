@@ -1,3 +1,5 @@
+#requires -Version 5.1
+
 # Create-ManualTestFixtures.ps1
 #
 # Manual test fixture generator for Remove-ReparsePoints.
@@ -8,9 +10,25 @@
 #
 # Notes:
 # - This script is for local/manual testing only.
-# - It should never target important real data.
+# - Use a dedicated empty test directory.
+# - Do not target important real data.
+# - Do not use dangerous locations such as a drive root, Windows directory,
+#   active user profile, or project repository root.
 # - The fixture root should be explicit and easy to delete.
 
+
+[CmdletBinding()]
+param(
+  [Parameter(Mandatory = $true)]
+  [ValidateNotNullOrEmpty()]
+  [string] $Path
+)
+
+$ErrorActionPreference = 'Stop'
+
+$RootPath = [System.IO.Path]::GetFullPath($Path)
+
+# Declarative description of the file system structure to create.
 $FileSystemLayout = [ordered]@{
   Entries = @(
     [ordered]@{
@@ -49,9 +67,8 @@ $FileSystemLayout = [ordered]@{
   )
 }
 
-# TODO: Add fixture root path.
-# The root path should be explicit.
-# Do not default to a dangerous location.
+# TODO: Add safety checks for dangerous root paths.
+# Examples: drive root, Windows directory, active user profile, or repository root.
 
 # TODO: Check whether fixture root already exists.
 # Decide whether to:
