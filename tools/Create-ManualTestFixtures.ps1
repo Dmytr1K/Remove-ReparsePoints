@@ -82,6 +82,21 @@ $FileSystemLayout = [ordered]@{
   )
 }
 
+$AllowedEntryTypes = @(
+  'Directory'
+  'File'
+  'Junction'
+  'DirectorySymlink'
+  'FileSymlink'
+  'Hardlink'
+)
+
+foreach ($Entry in $FileSystemLayout.Entries) {
+  if ($Entry.Type -notin $AllowedEntryTypes) {
+    throw "Unsupported file system entry type: $($Entry.Type)"
+  }
+}
+
 foreach ($Entry in $FileSystemLayout.Entries) {
   $EntryPath = Join-Path -Path $RootPath -ChildPath $Entry.RelativePath
 
@@ -95,8 +110,6 @@ foreach ($Entry in $FileSystemLayout.Entries) {
     }
   }
 }
-
-# TODO: Add validation for unsupported item types.
 
 # TODO: Add validation for missing required fields.
 
