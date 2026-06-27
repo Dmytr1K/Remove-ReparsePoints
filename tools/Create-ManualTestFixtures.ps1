@@ -165,6 +165,11 @@ foreach ($Entry in $FileSystemLayout.Entries) {
       $TargetPath = Join-Path -Path $RootPath -ChildPath $Entry.TargetRelativePath
       Invoke-Mklink -Command "mklink `"$EntryPath`" `"$TargetPath`""
     }
+
+    'Hardlink' {
+      $TargetPath = Join-Path -Path $RootPath -ChildPath $Entry.TargetRelativePath
+      Invoke-Mklink -Command "mklink /H `"$EntryPath`" `"$TargetPath`""
+    }
   }
 
   if ($Entry.Attributes) {
@@ -176,8 +181,6 @@ foreach ($Entry in $FileSystemLayout.Entries) {
     }
   }
 }
-
-# TODO: Add processor for hardlinks.
 
 # TODO: Add clearer output messages.
 
