@@ -118,6 +118,27 @@ New-Item -ItemType Directory -Path $RootPath | Out-Null
 # - removing and recreating the fixture root
 # - requiring an explicit -Force switch
 
+function Invoke-Mklink {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string] $Command
+  )
+
+  $PreviousErrorActionPreference = $ErrorActionPreference
+
+  try {
+    $ErrorActionPreference = 'Continue'
+    $Output = & cmd.exe /d /c $Command 2>&1
+  }
+  finally {
+    $ErrorActionPreference = $PreviousErrorActionPreference
+  }
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "mklink failed: $Command`n$Output"
+  }
+}
+
 foreach ($Entry in $FileSystemLayout.Entries) {
   $EntryPath = Join-Path -Path $RootPath -ChildPath $Entry.RelativePath
 
@@ -128,6 +149,11 @@ foreach ($Entry in $FileSystemLayout.Entries) {
 
     'File' {
       Set-Content -Path $EntryPath -Value $Entry.Content
+    }
+
+    'Junction' {
+      $TargetPath = Join-Path -Path $RootPath -ChildPath $Entry.TargetRelativePath
+      Invoke-Mklink -Command "mklink /J `"$EntryPath`" `"$TargetPath`""
     }
   }
 
@@ -140,8 +166,6 @@ foreach ($Entry in $FileSystemLayout.Entries) {
     }
   }
 }
-
-# TODO: Add processor for junctions.
 
 # TODO: Add processor for symbolic links.
 
