@@ -182,7 +182,7 @@ foreach ($Entry in $FileSystemLayout.Entries) {
   }
 }
 
-# TODO: Add clearer output messages.
+Write-Host "Created manual test fixture: $RootPath"
 
 # TODO: Add cleanup/reset behavior later if needed.
 
