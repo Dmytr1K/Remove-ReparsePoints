@@ -1,55 +1,67 @@
+#requires -Version 5.1
+
+# Remove-ReparsePoints.ps1
+#
+# Finds reparse points in a directory tree and optionally removes them.
+#
+# By default, the script runs in preview mode.
+# Actual removal requires the explicit -Remove switch.
+
+[CmdletBinding()]
 param(
   [Parameter(Mandatory = $true)]
   [ValidateNotNullOrEmpty()]
-  [string]$Path,
+  [string] $Path,
 
-  [switch]$Remove
+  [switch] $Remove
 )
 
-Function Remove-ReparsePoints {
+function Remove-ReparsePoints {
   param(
     [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    [string]$Path,
+    [string] $Path,
 
-    [switch]$Remove
+    [switch] $Remove
   )
 
   Get-ChildItem -Path $Path -Force -ErrorAction Stop | ForEach-Object {
     $CurrentObject = $_
-    If ($CurrentObject.Attributes -match 'ReparsePoint') {
-      Try {
-        If ($Remove) {
-          If ($CurrentObject.Attributes -match 'ReadOnly') {
+
+    if ($CurrentObject.Attributes -match 'ReparsePoint') {
+      try {
+        if ($Remove) {
+          if ($CurrentObject.Attributes -match 'ReadOnly') {
             $CurrentObject.Attributes -= 'ReadOnly'
           }
-          If ($CurrentObject.Attributes -match 'System') {
+
+          if ($CurrentObject.Attributes -match 'System') {
             $CurrentObject.Attributes -= 'System'
           }
+
           $CurrentObject.Delete()
           Write-Host "Removed: $($CurrentObject.FullName)"
         }
-        Else {
+        else {
           Write-Host "Would remove: $($CurrentObject.FullName)"
         }
       }
-      Catch {
+      catch {
         Write-Host "Failed to remove: $($CurrentObject.FullName)"
         Write-Host $_.Exception.Message
       }
     }
-    ElseIf ($CurrentObject.PSIsContainer) {
-      Try {
+    elseif ($CurrentObject.PSIsContainer) {
+      try {
         Remove-ReparsePoints -Path $CurrentObject.FullName -Remove:$Remove
       }
-      Catch {
+      catch {
         Write-Host $CurrentObject.FullName
         Write-Host 'PSIsContainer Error!'
       }
     }
   }
 }
-
 
 Remove-ReparsePoints -Path $Path -Remove:$Remove
 
