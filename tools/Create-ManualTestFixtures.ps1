@@ -160,6 +160,11 @@ foreach ($Entry in $FileSystemLayout.Entries) {
       $TargetPath = Join-Path -Path $RootPath -ChildPath $Entry.TargetRelativePath
       Invoke-Mklink -Command "mklink /D `"$EntryPath`" `"$TargetPath`""
     }
+
+    'FileSymlink' {
+      $TargetPath = Join-Path -Path $RootPath -ChildPath $Entry.TargetRelativePath
+      Invoke-Mklink -Command "mklink `"$EntryPath`" `"$TargetPath`""
+    }
   }
 
   if ($Entry.Attributes) {
@@ -171,8 +176,6 @@ foreach ($Entry in $FileSystemLayout.Entries) {
     }
   }
 }
-
-# TODO: Add processor for symbolic links.
 
 # TODO: Add processor for hardlinks.
 
