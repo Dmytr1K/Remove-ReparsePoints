@@ -189,5 +189,3 @@ foreach ($Entry in $FileSystemLayout.Entries) {
 Write-Host "Created manual test fixture: $RootPath"
 
 # TODO: Add cleanup/reset behavior later if needed.
-
-# TODO: Document how to use the generated fixture with Remove-ReparsePoints.
