@@ -37,18 +37,22 @@ $FileSystemLayout = [ordered]@{
     [ordered]@{
       Type         = 'Directory'
       RelativePath = 'RegularDirectory'
-      Attributes   = @('ReadOnly')
     }
     [ordered]@{
       Type         = 'File'
       RelativePath = 'RegularDirectory\RegularFile.txt'
       Content      = 'Regular file used by manual Remove-ReparsePoints tests.'
-      Attributes   = @('ReadOnly')
     }
     [ordered]@{
       Type               = 'Junction'
       RelativePath       = 'JunctionToRegularDirectory'
       TargetRelativePath = 'RegularDirectory'
+    }
+    [ordered]@{
+      Type               = 'Junction'
+      RelativePath       = 'JunctionWithAttributes'
+      TargetRelativePath = 'RegularDirectory'
+      Attributes         = @('ReadOnly', 'Hidden', 'System')
     }
     [ordered]@{
       Type               = 'DirectorySymlink'
