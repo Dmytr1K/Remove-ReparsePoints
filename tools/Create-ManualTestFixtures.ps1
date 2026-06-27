@@ -155,6 +155,11 @@ foreach ($Entry in $FileSystemLayout.Entries) {
       $TargetPath = Join-Path -Path $RootPath -ChildPath $Entry.TargetRelativePath
       Invoke-Mklink -Command "mklink /J `"$EntryPath`" `"$TargetPath`""
     }
+
+    'DirectorySymlink' {
+      $TargetPath = Join-Path -Path $RootPath -ChildPath $Entry.TargetRelativePath
+      Invoke-Mklink -Command "mklink /D `"$EntryPath`" `"$TargetPath`""
+    }
   }
 
   if ($Entry.Attributes) {
