@@ -2,7 +2,7 @@
 
 PowerShell script for finding and removing reparse points in a directory tree on Windows.
 
-This project is an early version. The current `v0.7` version adds a manual test fixture generator for reparse point testing.
+This project is an early version. See [HISTORY.md](HISTORY.md) for version history.
 
 ## Purpose
 
@@ -75,47 +75,3 @@ The target path must not already exist. The script stops if the fixture root alr
 After creating the fixture, use the same path with the preview and removal commands shown in the Usage section.
 
 Symbolic link creation may require Windows Developer Mode or an elevated PowerShell session, depending on system settings.
-
-## Status
-
-Changes in current `v0.7` version:
-
-* adds a manual test fixture generator;
-* creates regular files and directories, junctions, symbolic links, and hardlinks;
-* includes a junction with additional filesystem attributes for manual testing.
-
-`v0.6` changes:
-
-* reports removed items only after a successful delete operation;
-* reports failed removals with a clearer message and the underlying exception text;
-* removes stale internal error-type comments from the removal logic.
-
-`v0.5` changes:
-
-* removes the interactive key press pause at the end of the script.
-
-`v0.4` changes:
-
-* uses preview-only mode by default;
-* requires an explicit `-Remove` switch for actual deletion;
-* replaces the previous `-Preview` switch with safer default behavior.
-
-`v0.3` changes:
-
-* adds `-Preview` mode;
-* allows listing reparse points without changing attributes or removing filesystem entries.
-
-`v0.2` changes:
-
-* requires an explicit `-Path` parameter;
-* removes the default current directory target.
-
-Planned later improvements:
-
-* split finding and removing logic;
-* further improve output and error handling.
-
-## Project info
-
-* Project version: 0.7
-* Created: 2026-06-17

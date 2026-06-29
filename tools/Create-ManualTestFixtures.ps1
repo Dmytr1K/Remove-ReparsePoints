@@ -106,21 +106,11 @@ foreach ($Entry in $FileSystemLayout.Entries) {
   }
 }
 
-# TODO: Add safety checks for dangerous root paths.
-# Examples: drive root, Windows directory, active user profile, or repository root.
-
 if (Test-Path -LiteralPath $RootPath) {
   throw "Fixture root already exists: $RootPath. Choose a new path or remove the existing directory manually."
 }
 
 New-Item -ItemType Directory -Path $RootPath | Out-Null
-
-# TODO: Add optional recreate behavior for an existing fixture root.
-# Current behavior: stop if the fixture root already exists.
-# Later, decide whether to support:
-# - allowing an empty existing directory
-# - removing and recreating the fixture root
-# - requiring an explicit -Force switch
 
 function Invoke-Mklink {
   param(
@@ -187,5 +177,3 @@ foreach ($Entry in $FileSystemLayout.Entries) {
 }
 
 Write-Host "Created manual test fixture: $RootPath"
-
-# TODO: Add cleanup/reset behavior later if needed.
