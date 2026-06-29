@@ -2,7 +2,7 @@
 
 Version history for Remove-ReparsePoints.
 
-Current project version: 0.7
+Current project version: 0.7  
 Created: 2026-06-17
 
 ## v0.7
