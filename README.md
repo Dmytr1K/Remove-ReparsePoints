@@ -2,7 +2,7 @@
 
 PowerShell script for finding and removing reparse points in a directory tree on Windows.
 
-This project is an early version. See [HISTORY.md](HISTORY.md) for version history and [TODO.md](TODO.md) for planned improvements.
+This project is an early version. See [HISTORY.md](HISTORY.md) for version history.
 
 ## Purpose
 
