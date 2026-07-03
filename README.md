@@ -10,9 +10,9 @@ This project is an early version. See [HISTORY.md](HISTORY.md) for version histo
 
 Typical use cases:
 
-* cleaning copied Windows user profiles;
-* cleaning mounted backup images;
-* avoiding recursive directory loops caused by reparse points.
+- cleaning copied Windows user profiles
+- cleaning mounted backup images
+- avoiding recursive directory loops caused by reparse points
 
 ## Warning
 
@@ -28,8 +28,8 @@ Run without `-Remove` first to inspect what would be removed.
 
 ## Requirements
 
-* Windows
-* Windows PowerShell 5.1
+- Windows
+- Windows PowerShell 5.1
 
 Target environment: Windows 10 / Windows 11.
 
@@ -57,12 +57,13 @@ The repository includes a helper script for creating a local manual test fixture
 
 The fixture contains:
 
-* a regular directory and file
-* a junction
-* a junction with additional attributes
-* a directory symbolic link
-* a file symbolic link
-* a hardlink
+- a regular directory
+- a regular file
+- a junction
+- a junction with additional attributes
+- a directory symbolic link
+- a file symbolic link
+- a hardlink
 
 Create the fixture in a dedicated test location:
 
