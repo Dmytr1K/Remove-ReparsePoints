@@ -75,3 +75,7 @@ The target path must not already exist. The script stops if the fixture root alr
 After creating the fixture, use the same path with the preview and removal commands shown in the Usage section.
 
 Symbolic link creation may require Windows Developer Mode or an elevated PowerShell session, depending on system settings.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
