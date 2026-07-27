@@ -28,17 +28,11 @@ The production script should not be refactored during this stage. Any required b
 
 ### Automated tests for the current behavior
 
-- Add the initial Pester 5 test setup before refactoring the main script.
 - Keep test concerns in separate files as the suite grows:
-  - `ProjectStructure.Tests.ps1`
   - `PreviewMode.Tests.ps1`
   - `Removal.Tests.ps1`
   - `PathSafety.Tests.ps1`
   - `ManualTestFixture.Tests.ps1`
-- Add project structure and syntax validation tests.
-- Add characterization tests for the current preview mode.
-- Capture the current set of discovered reparse points without making incidental console formatting part of the long-term contract.
-- Verify that preview mode does not modify regular files, directories, links, or attributes.
 - Add characterization tests for explicit `-Remove` behavior in isolated temporary directories.
 - Add tests for finding and removing:
   - junctions
@@ -47,7 +41,6 @@ The production script should not be refactored during this stage. Any required b
   - junctions with additional filesystem attributes
 - Add a test that hardlinks are not treated as reparse points.
 - Verify that regular files and regular directories are preserved.
-- Verify that traversal continues through regular directories but does not recurse into reparse-point directories.
 - Keep automated test fixtures isolated from the manual fixture generator initially.
 - Extract shared test helpers only after meaningful duplication appears.
 - Define a predictable skip strategy for symbolic-link tests when the environment does not grant link-creation privileges.
