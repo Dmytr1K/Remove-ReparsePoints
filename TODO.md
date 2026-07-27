@@ -14,7 +14,6 @@ The production script should not be refactored during this stage. Any required b
 
 - Keep `README.md`, `HISTORY.md`, and `TODO.md` in the repository root.
 - Do not add a separate development guide unless the technical material eventually becomes too large for the README.
-- Add concise development prerequisites, validation commands, test instructions, and manual testing guidance directly to the README.
 - Move the manual fixture generator into a purpose-specific `tools/ManualTesting` directory.
 - Add proportionate documentation to all tracked PowerShell files:
   - use full comment-based help for user-facing scripts
@@ -37,21 +36,12 @@ The production script should not be refactored during this stage. Any required b
 - Keep automated test fixtures isolated from the manual fixture generator initially.
 - Extract shared test helpers only after meaningful duplication appears.
 
-### Continuous integration
-
-- Add a Windows PowerShell 5.1 GitHub Actions workflow for pushes and pull requests targeting `main`.
-- Install the pinned development dependencies in CI.
-- Run the Pester suite in CI.
-- Run PSScriptAnalyzer with the project settings and custom rules in CI.
-- Keep the workflow focused on validation; do not add deployment or release automation yet.
-
 ### Technical documentation
 
 - Document the exact current meaning of preview mode and `-Remove`.
 - Document which filesystem objects are currently detected by the implementation.
 - Document that the current implementation is an early version and that reparse-point classification will be tightened later.
 - Expand manual fixture instructions with expected preview and removal results.
-- Document that symbolic-link tests require Developer Mode or administrator privileges and are skipped when link creation is unavailable.
 - Add badges only after the corresponding CI and validation steps exist.
 - Prepare short scripted terminal demonstrations using disposable test data:
   - previewing detected reparse points

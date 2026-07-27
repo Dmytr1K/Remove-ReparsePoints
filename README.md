@@ -77,6 +77,37 @@ After creating the fixture, use the same path with the preview and removal comma
 
 Symbolic link creation may require Windows Developer Mode or an elevated PowerShell session, depending on system settings.
 
+## Development and validation
+
+The project uses pinned versions of Pester and PSScriptAnalyzer for reproducible validation.
+
+Install the development dependencies for the current user:
+
+```powershell
+.\tools\DevelopmentDependencies\Install-DevelopmentDependencies.ps1
+```
+
+Run the automated tests:
+
+```powershell
+Import-Module Pester -RequiredVersion 5.8.0 -Force
+Invoke-Pester .\tests -Output Detailed
+```
+
+The current test suite covers preview and removal behavior for junctions, directory and file symbolic links, and hardlinks. Symbolic-link tests require Windows Developer Mode or administrator privileges and are skipped when link creation is unavailable.
+
+Run code analysis with the project settings and custom rules:
+
+```powershell
+Import-Module PSScriptAnalyzer -RequiredVersion 1.25.0 -Force
+Invoke-ScriptAnalyzer `
+  -Path . `
+  -Recurse `
+  -Settings .\PSScriptAnalyzerSettings.psd1
+```
+
+The [CI workflow](.github/workflows/CI.yml) runs the same tests and code analysis on Windows PowerShell 5.1 for pushes and pull requests targeting `main`.
+
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
