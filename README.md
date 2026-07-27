@@ -1,5 +1,9 @@
 # Remove-ReparsePoints
 
+[![CI](https://github.com/Dmytr1K/Remove-ReparsePoints/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/Dmytr1K/Remove-ReparsePoints/actions/workflows/CI.yml)
+[![Windows PowerShell 5.1](https://img.shields.io/badge/Windows_PowerShell-5.1-5391FE?logo=powershell&logoColor=white)](#development-and-validation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 PowerShell script for finding and removing reparse points in a directory tree on Windows.
 
 This project is an early version. See [HISTORY.md](HISTORY.md) for version history and [TODO.md](TODO.md) for planned improvements.

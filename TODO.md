@@ -42,7 +42,6 @@ The production script should not be refactored during this stage. Any required b
 - Document which filesystem objects are currently detected by the implementation.
 - Document that the current implementation is an early version and that reparse-point classification will be tightened later.
 - Expand manual fixture instructions with expected preview and removal results.
-- Add badges only after the corresponding CI and validation steps exist.
 - Prepare short scripted terminal demonstrations using disposable test data:
   - previewing detected reparse points
   - explicitly removing supported test links
