@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Windows PowerShell 5.1 validation
+    runs-on: windows-2022
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Verify Windows PowerShell version
+        shell: powershell
+        run: |
+          $Version = $PSVersionTable.PSVersion
+
+          if ($Version.Major -ne 5 -or $Version.Minor -ne 1) {
+            throw "Expected Windows PowerShell 5.1, but found $Version."
+          }
+
+          Write-Information `
+            -MessageData "Using Windows PowerShell $Version." `
+            -InformationAction Continue
+
+      - name: Install development dependencies
+        shell: powershell
+        run: .\tools\DevelopmentDependencies\Install-DevelopmentDependencies.ps1
+
+      - name: Run Pester tests
+        shell: powershell
+        run: |
+          Import-Module Pester -RequiredVersion 5.8.0 -Force
+          $Result = Invoke-Pester .\tests -Output Detailed -PassThru
+
+          if ($Result.Result -ne 'Passed') {
+            throw "Pester validation failed: $($Result.FailedCount) test(s) failed."
+          }
+
+      - name: Run PSScriptAnalyzer
+        shell: powershell
+        run: |
+          Import-Module PSScriptAnalyzer -RequiredVersion 1.25.0 -Force
+          $Results = @(
+            Invoke-ScriptAnalyzer `
+              -Path . `
+              -Recurse `
+              -Settings .\PSScriptAnalyzerSettings.psd1
+          )
+
+          if ($Results.Count -gt 0) {
+            $Results |
+              Format-Table RuleName, Severity, ScriptName, Line, Message -AutoSize |
+              Out-String |
+              Write-Information -InformationAction Continue
+
+            throw "PSScriptAnalyzer found $($Results.Count) issue(s)."
+          }
