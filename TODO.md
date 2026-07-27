@@ -24,12 +24,6 @@ The production script should not be refactored during this stage. Any required b
 
 ### Code analysis
 
-- Add `PSScriptAnalyzerSettings.psd1`.
-- Add the shared custom PascalCase variable naming rule used by the other PowerShell projects.
-- Document any temporarily excluded analyzer rules that represent known implementation work:
-  - `PSUseShouldProcessForStateChangingFunctions`
-  - `PSAvoidUsingWriteHost`
-  - `PSUseSingularNouns`
 - Remove temporary analyzer exclusions when the corresponding implementation work is completed.
 
 ### Automated tests for the current behavior
