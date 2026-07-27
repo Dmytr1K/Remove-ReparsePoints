@@ -31,15 +31,11 @@ The production script should not be refactored during this stage. Any required b
 - Keep test concerns in separate files as the suite grows:
   - `PreviewMode.Tests.ps1`
   - `Removal.Tests.ps1`
+  - `LinkTypes.Tests.ps1`
   - `PathSafety.Tests.ps1`
   - `ManualTestFixture.Tests.ps1`
-- Add tests for finding and removing:
-  - directory symbolic links
-  - file symbolic links
-- Add a test that hardlinks are not treated as reparse points.
 - Keep automated test fixtures isolated from the manual fixture generator initially.
 - Extract shared test helpers only after meaningful duplication appears.
-- Define a predictable skip strategy for symbolic-link tests when the environment does not grant link-creation privileges.
 
 ### Continuous integration
 
@@ -55,6 +51,7 @@ The production script should not be refactored during this stage. Any required b
 - Document which filesystem objects are currently detected by the implementation.
 - Document that the current implementation is an early version and that reparse-point classification will be tightened later.
 - Expand manual fixture instructions with expected preview and removal results.
+- Document that symbolic-link tests require Developer Mode or administrator privileges and are skipped when link creation is unavailable.
 - Add badges only after the corresponding CI and validation steps exist.
 - Prepare short scripted terminal demonstrations using disposable test data:
   - previewing detected reparse points
