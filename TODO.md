@@ -22,12 +22,8 @@ The production script should not be refactored during this stage. Any required b
   - keep small supporting data files concise
 - Review README, HISTORY, and TODO together for consistent terminology and links.
 
-### Development dependencies and code analysis
+### Code analysis
 
-- Add a version-controlled development dependency manifest.
-- Add an idempotent development dependency installer for:
-  - Pester 5.8.0
-  - PSScriptAnalyzer 1.25.0
 - Add `PSScriptAnalyzerSettings.psd1`.
 - Add the shared custom PascalCase variable naming rule used by the other PowerShell projects.
 - Document any temporarily excluded analyzer rules that represent known implementation work:
